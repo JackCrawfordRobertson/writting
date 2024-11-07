@@ -12,6 +12,7 @@
     flex-direction: column;
     color: #000;
     overflow: hidden; /* Prevent overflow */
+    border-radius: 30px;
 }
 
 .storyContainer {
@@ -23,34 +24,11 @@
     overflow-y: auto;
 }
 
-/* Floating Close Button */
-.closeButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #fff;
-    color: #3496d3;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-}
-
-.closeButton:hover {
-    background-color: #333;
-}
-
+/* Header Styles */
 .header {
-    display: grid; /* Change to grid layout */
+    display: grid; /* Use grid layout */
     grid-template-columns: 1fr 50px; /* 1st column takes available space, 2nd column fixed size */
-    align-items: center;
+    align-items: start; /* Align items at the top */
     padding: 20px;
     background-color: #3496d3; /* Match header background with overlay */
 }
@@ -74,12 +52,43 @@
     letter-spacing: -.05em;
 }
 
-/* Add a style for the close button container */
-.closeButtonContainer {
-    justify-self: end; /* Align close button to the right */
+/* Close Button Styles */
+.closeButton {
+    background: #fff;
+    color: #3496d3;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
 }
 
+.closeButton:hover {
+    background-color: #333;
+}
+
+/* Close Button Container */
+.headerControls {
+    display: flex; /* Use flexbox for controls */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: space-between; /* Space out items */
+    height: 100%; /* Take full height */
+}
+
+/* Add a style for the close button container */
+.closeButtonContainer {
+    margin-top: 20px; /* Add margin to push it down */
+}
+
+/* Logo Styles */
 .bottomImage {
+    margin-top: auto; /* Push the logo down to the bottom of the header */
     display: flex;
     justify-content: center;
     width: 100%;
@@ -100,6 +109,7 @@
     margin: 0 auto; /* Center the content body */
 }
 
+/* Grid Item Styles */
 .gridItem {
     width: 100%;
     height: auto;
@@ -107,18 +117,10 @@
     border-radius: 8px;
 }
 
+/* Description Styles */
 .description {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #333;
     margin-bottom: 20px;
-}
-
-
-.headerControls {
-    display: flex; /* Use flexbox layout */
-    justify-content: space-between; /* Space between items */
-    align-items: center; /* Align items vertically */
-    flex: 1; /* Allow this section to take available space */
-    height: 100%;
 }

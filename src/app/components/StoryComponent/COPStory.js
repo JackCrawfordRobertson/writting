@@ -12,8 +12,8 @@ const COPStory = ({ onClose }) => {
 
         // Animate on mount
         gsap.fromTo(storyRef.current, 
-            { y: "100%", opacity: 0 }, 
-            { y: "0%", opacity: 1, duration: 0.5, ease: "power3.out" }
+            { y: "100%", opacity: 1 }, 
+            { y: "0%", opacity: 1, duration: 1, ease: "power3.out" }
         );
 
         return () => {};
