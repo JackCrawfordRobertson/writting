@@ -1,95 +1,86 @@
+"use client";
+
+import React, { useState } from "react";
+import { ResponsiveTreeMap } from "@nivo/treemap";
 import Image from "next/image";
-import styles from "./page.module.css";
+import storyData from "@/app/data/storyData";
+import styles from "@/app/styles/page.module.css";
+import COPStory from "@/app/components/StoryComponent/COPStory"; // Import the COPStory component
+import WordsMeanMoreStory from "@/app/components/StoryComponent/WordsMeanMoreStory"; // Import any other story components if you have them
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+const HomePage = () => {
+    const [open, setOpen] = useState(false);
+    const [selectedStoryKey, setSelectedStoryKey] = useState(null); // Use key to identify which story to show
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    const handleClick = (node) => {
+        console.log("Node clicked:", node);
+        setSelectedStoryKey(node.data.key); // Set the selected story key based on the clicked node
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        console.log("Closing story...");
+        setOpen(false);
+    };
+
+    return (
+        <div className={styles.app}>
+            <header className={styles.header}>
+                <h1 className={styles.titleWithLogo}>
+                    Written Work
+                    <Image src="/logo.svg" alt="Logo" width={24} height={24} className={styles.logo} />
+                </h1>
+                <p className={styles.paragraphText}>
+                    In this online archive, I've authored a series of stories, each represented by a rectangle. These
+                    rectangles visually estimate the carbon emissions associated with various topics, including
+                    companies, themes, and individuals. My goal is to provide a clear understanding of environmental
+                    impacts.
+                </p>
+            </header>
+            <main className={styles.content}>
+                <div style={{ height: "80svh", width: "100%" }}>
+                    <ResponsiveTreeMap
+                        data={storyData}
+                        identity="name"
+                        value="value"
+                        leavesOnly={true}
+                        label={(node) => node.data.name}
+                        labelSkipSize={12}
+                        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+                        onClick={handleClick}
+                        nodeOpacity={0.9}
+                        innerPadding={5}
+                        outerPadding={10}
+                        borderWidth={2}
+                        borderColor="white"
+                        colors={["#3496d3"]} // Primary base color
+                        labelTextColor="white"
+                        tooltip={({ node }) => (
+                            <div
+                                style={{
+                                    padding: "8px 12px",
+                                    background: "white",
+                                    color: "#3496d3",
+                                    borderRadius: "4px",
+                                    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+                                }}
+                            >
+                                <strong>{node.data.name}</strong>
+                                <br />
+                                <span>Estimated Scale of Emissions: {node.data.value}</span>
+                            </div>
+                        )}
+                    />
+                </div>
+                {open && selectedStoryKey === "COPStory" && (
+                    <COPStory onClose={handleClose} /> // Render COPStory when its key is selected
+                )}
+                {open && selectedStoryKey === "WordsMeanMoreStory" && (
+                    <WordsMeanMoreStory onClose={handleClose} /> // Render another story component if needed
+                )}
+            </main>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
-}
+    );
+};
+
+export default HomePage;
